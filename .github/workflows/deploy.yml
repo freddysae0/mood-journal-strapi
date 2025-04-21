@@ -1,0 +1,35 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: Deploy via SSH
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Copy files to server via rsync
+        run: |
+            rsync -avz --exclude='.git' -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" ./ root@${{ secrets.SERVER_HOST }}:~/journalstrapi
+
+
+      - name: Run docker-compose on server
+        run: |
+          ssh -i ~/.ssh/id_rsa root@${{ secrets.SERVER_HOST }} << 'EOF'
+            cd ~/journalstrapi
+            docker-compose down
+            docker-compose up --build -d
+          EOF
