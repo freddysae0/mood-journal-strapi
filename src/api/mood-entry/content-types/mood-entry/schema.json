@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mood_entries",
+  "info": {
+    "singularName": "mood-entry",
+    "pluralName": "mood-entries",
+    "displayName": "Mood Entry",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "note": {
+      "type": "text"
+    },
+    "date": {
+      "type": "datetime"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "mood_entries"
+    },
+    "mood": {
+      "type": "enumeration",
+      "enum": [
+        "sad",
+        "meh",
+        "happy"
+      ]
+    }
+  }
+}

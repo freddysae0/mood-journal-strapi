@@ -1,0 +1,46 @@
+# Node.js dependencies
+node_modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Version control
+.git
+.gitignore
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Build directories
+.tmp
+.cache
+dist
+
+# Logs
+logs
+*.log
+
+# Database files
+*.sqlite
+*.sqlite3
+*.db
+# Except if you want to include specific database files
+!.tmp/data.db
+
+# Miscellaneous
+.idea
+.vscode
+

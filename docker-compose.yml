@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  strapi:
+    image: journalstrapi:latest
+    ports:
+      - "1337:1337"
+    environment:
+      APP_KEYS: k4U8GzBC8RJpST2YI3OXNg==,zbolhXT5De3uKSAQLQgETQ==,b7Dh0Kt+ZTo+Wq0ZKXQS7Q==,vaDXgUsIi9S3vh7S5hSsiw==
+      API_TOKEN_SALT: XkKmw0QFRkyASnc2f0ptrA==
+      ADMIN_JWT_SECRET: ADMIN_JWT_SECRET
+      TRANSFER_TOKEN_SALT: F2AY1fqmJ4IS6BYwqudb+Q==
+    volumes:
+      - ./data:/app/.tmp
