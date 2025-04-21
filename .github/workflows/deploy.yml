@@ -20,10 +20,12 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
-
-      - name: Copy files to server via rsync
+    
+      - name: Copy project files to remote server via SCP
         run: |
-            rsync -avz --exclude='.git' -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" ./ root@${{ secrets.SERVER_HOST }}:~/journalstrapi
+          echo "${{ secrets.SERVER_SSH_KEY }}" > id_rsa
+          chmod 600 id_rsa
+          scp -i id_rsa -o StrictHostKeyChecking=no -r . root@${{ secrets.SERVER_HOST }}:~/journalstrapi
 
 
       - name: Run docker-compose on server
